@@ -1,0 +1,17 @@
+#include <iostream>
+#include <io.h> // thư viện định nghĩa cho hàm _setmode
+#include <fcntl.h> // thư viện định nghĩa cho hàm _setmode
+using namespace std;
+
+int main()
+{
+	_setmode(_fileno(stdout), _O_WTEXT); // Kích hoạt chế độ bảng mã Unicode (có dấu)
+	 wcout << L"Nguyễn Việt Nam Sơn" << endl;
+
+	wcout << "Tran Duong Thuy Linh";
+
+	wprintf(L"\nTrung tâm đào tạo tin học - Thiết kế phần mềm - Việt Nam Sơn");
+
+	system("pause");
+    return 0;
+}

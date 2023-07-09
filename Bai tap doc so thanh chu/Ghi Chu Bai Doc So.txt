@@ -1,0 +1,432 @@
+﻿http://ntucoder.net/Problem/Details/4439
+http://upcoder.top/index.php/problems/submit/989/6549f0c94a72a7f5001fe31453cfd14d/%C4%90%E1%BB%8Dc_s%E1%BB%91
+
+500 => nam tram
+
+105 => mot tram linh nam
+
+25 => hai muoi lam
+
+100000 => mot tram nghin
+1000000 => mot trieu
+
+Để làm được thì tối thiểu kiến thức đến đâu?
++ Nhập xuất căn bản
++ Câu lệnh điều kiện - rẽ nhánh => từ chỗ này trở lên là tối thiểu đủ để giải quyết
++ Câu lệnh lặp
++ Lập trình thủ tục - hàm
++ Xử lý chuỗi
+
+Quy tắc để đọc 1 số thành chữ:
+1 => mot
+
+12 => muoi hai
+24 => hai "muoi" bon
+35 => ba "muoi" lam
+
+123 => mot "tram" hai "muoi" ba
+213 => hai "tram" "muoi" ba
+204 => hai "tram" le bon
+505 => nam tram le nam
+515 => nam tram muoi lam
+525 => nam tram hai muoi lam
+535 => nam tram ba muoi lam
+
+52 => nam muoi hai
+
+
+1,234 => mot <nghin>, hai "tram" ba "muoi" bon
+
+12,345 => "muoi" hai <nghin>, ba "tram" bon "muoi" lam
+
+123,456 => mot "tram" hai "muoi" ba <nghin>, bon "tram" nam "muoi" sau
+
+1,234,567 => mot <trieu>, hai "tram" ba "muoi" bon <nghin>, nam "tram" sau "muoi" bay
+
+12,345,678 => "muoi" hai <trieu>, ba "tram" bon "muoi" lam <nghin>, sau "tram" bay "muoi" tam
+
+123,456,789 => mot "tram" hai "muoi" ba <trieu>, bon "tram" nam "muoi" sau <nghin>, bay "tram" tam "muoi" chin
+
+1,234,567,899 => mot <ty>, hai "tram" ba "muoi" bon <trieu>, nam "tram" sau "muoi" bay <nghin>, tam "tram" chin "muoi" chin
+
+12,345,678,998 => muoi hai <ty>, ba "tram" bon "muoi" lam <trieu>, sau "tram" bay "muoi" tam <nghin>, chin "tram" chin "muoi" tam
+
+123|,456,789,987 => mot "tram" hai "muoi" ba <ty>, bon "tram" nam "muoi" sau <trieu>, bay "tram" tam "muoi" chin <nghin>, chin "tram" tam "muoi" bay
+
+1,005,003 => mot trieu khong tram le nam nghin khong tram le ba
+
+1,000,005 => mot trieu khong tram le nam # mot trieu khong tram nghin khong tram le nam
+
+1,000,000 => mot trieu
+
+201 => hai trăm lẻ một
+11 => mười một
+21 => hai mươi mốt
+31 => ba muoi mốt
+41 => bốn mươi mốt
+51 => năm mươi mốt
+
+123
+
+Yêu cầu nâng cao đối với các Bạn viết vòng lặp trở lên: Hãy thiết kế chương trình để nó nhận vào 1 biến số nguyên lớn 8 byte (long long int) vẫn đọc được bình thường ngon lành. Tức là tối đa giá trị có thể đọc sẽ là:
+9|,223,372,036|,854,775,807 => chin (ty) hai tram hai muoi ba trieu ba tram bay muoi hai nghin khong tram ba muoi sau ty tam tram nam muoi bon trieu bay tram bay muoi lam nghin tam tram le bay
+
+123,456|,789,987,654 => mot tram hai muoi ba nghin bon tram nam muoi sau (ty) bay tram tam muoi chin trieu chin tram tam muoi bay nghin sau tram nam muoi bon
+
+Yêu cầu nâng cao đối với các Bạn biết xử lý chuỗi trở lên => thiết kế làm sao để chuỗi số có bao nhiêu chữ số (30, 50, 100, 200 chữ số ...) đều đọc được hết theo nguyên tắc Anh đã chỉ
+
+* PHÂN TÍCH CÁCH LÀM *
+
+Bước 1: Từ 1 số ban đầu chúng ta phải phân tách ra được thành các cụm số theo quy tắc đi từ phải qua trái của dãy số, cứ đếm đủ 3 chữ số mà ở trước có số nữa thì được xem là 1 cụm 3 chữ số, sau đó cụm ở đầu thì có thể có 1, 2 hay 3 chữ số thì tùy.
+vd:
+Giả sử nhập vào số = 12345678
+=> Anh muốn nó phải xuất ra màn hình mỗi dòng là 1 số như sau:
+12
+345
+678
+
+vd: Giả sử nhập vào số = 123456789987
+=> Anh muốn nó phải xuất ra màn hình mỗi dòng là 1 số như sau:
+123
+456
+789
+987
+
+Bước 2: Với mỗi cụm số đã tách ra trên mỗi dòng ở Bước 1 thì phải đọc được thành chữ tương ứng với cụm số đó
+vd:
+Giả sử nhập vào số = 12,345,678
+=> Anh muốn nó phải xuất ra màn hình mỗi dòng là 1 số như sau:
+12 => muoi hai
+345 => ba tram bon muoi lam
+678 => sau tram bay muoi tam
+
+vd: Giả sử nhập vào số = 123,456,789,987
+=> Anh muốn nó phải xuất ra màn hình mỗi dòng là 1 số như sau:
+123 => mot tram hai muoi ba
+456 => bon tram nam muoi sau
+789 => bay tram tam muoi chin
+987 => chin tram tam muoi bay
+
+Bước 3: Ở mỗi cụm chúng ta đọc thêm phụ âm tương ứng theo
+vd:
+Giả sử nhập vào số = 12,345,678
+=> Anh muốn nó phải xuất ra màn hình mỗi dòng là 1 số như sau:
+12 => muoi hai <trieu>
+345 => ba tram bon muoi lam <nghin>
+678 => sau tram bay muoi tam
+
+vd: Giả sử nhập vào số = 123,456,789,987
+=> Anh muốn nó phải xuất ra màn hình mỗi dòng là 1 số như sau:
+123 => mot tram hai muoi ba <ty>
+456 => bon tram nam muoi sau <trieu>
+789 => bay tram tam muoi chin <nghin>
+987 => chin tram tam muoi bay
+
+Khi đã làm được rồi thì viết kết quả trên 1 dòng để đúng như yêu cầu đề bài
+
+================================================================
+
+Bắt tay vào làm từng bước:
+
+Bước 1: Từ 1 số ban đầu chúng ta phải phân tách ra được thành các cụm số theo quy tắc đi từ phải qua trái của dãy số, cứ đếm đủ 3 chữ số mà ở trước có số nữa thì được xem là 1 cụm 3 chữ số, sau đó cụm ở đầu thì có thể có 1, 2 hay 3 chữ số thì tùy.
+vd:
+Giả sử nhập vào số = 12345678
+=> Anh muốn nó phải xuất ra màn hình mỗi dòng là 1 số như sau:
+12
+345
+678
+
+vd: Giả sử nhập vào số = 123456789987
+=> Anh muốn nó phải xuất ra màn hình mỗi dòng là 1 số như sau:
+123
+456
+789
+987
+
+Làm sao từ số ban đầu chúng ta biết nó sẽ có mấy cụm?
+1 cụm tối đa sẽ là 3 số
+2 cụm tối đa sẽ là 6 số
+3 cụm tối đa sẽ là 9 số
+
+Nếu chúng ta có 1 số có số chữ số <= 3 (1, 12, 123) thì số đó sẽ có mấy cụm? => chỉ có 1 cụm
+1	=> có 1 chữ số	=> có 0 dấu phẩy
+12	=> có 2 chữ số	=> có 0 dấu phẩy
+123	=> có 3 chữ số	=> có 0 dấu phẩy
+1,234	=> có 4 chữ số	=> có 1 dấu phẩy
+12,345	=> có 5 chữ số	=> có 1 dấu phẩy
+123,456 	=> có 6 chữ số	=> có 1 dấu phẩy
+1,234,567 	=> có 7 chữ số	=> có 2 dấu phẩy
+12,345,678	=> có 8 chữ số	=> có 2 dấu phẩy
+123,456,789 => có 9 chữ số	=> có 2 dấu phẩy
+1,234,567,899 => có 10 chữ số	=> có 3 dấu phẩy
+
+Nhìn ra quy tắc để biết với 1 số nguyên bất kỳ sẽ có bao nhiêu dấu phẩy? bao nhiêu cụm số?
+số dấu phẩy = (số lượng chữ số - 1) / 3
+số cụm = số dấu phẩy + 1
+
+Giả sử nhập vào số = 12,345,678
+=> Anh muốn nó phải xuất ra màn hình mỗi dòng là 1 số như sau:
+12	=> 12345678 / 10^6 = 12
+Sau khi đã có số 12 thì số ban đầu phải làm sao bỏ đi số 12 ở đầu đi => 12345678 % 10^6 = 345678
+345	=> 345678 / 10^3 = 345
+Sau khi đã có số 345 thì số ban đầu phải bỏ số 345 đi => 345678 % 10^3 = 678
+678	=> 678 / 10^0 = 678
+
+123456789987 => có 12 chữ số
+số dấu phẩy = (số chữ số - 1) / 3 = 11 / 3 = 3
+số cụm = số dấu phẩy + 1 = 3 + 1 = 4
+
+123456789987 / 10^(3 * 3) = 123456789987 / 10^9 = 123
+123456789987 % 10^9 = 456789987
+
+456789987 / 10^(3 * 2) = 456789987 / 10^6 = 456
+456789987 % 10^6 = 789987
+
+789987 / 10^(3 * 1) = 789987 / 10^3 = 789
+789987 % 10^3 = 987
+
+987 / 10^(3 * 0) = 987 / 10^0 = 987 / 1 = 987
+987 % 10^0 = 0 => KẾT THÚC
+
+=====================================
+123 % 10 = 3
+123 / 10 = 12
+
+12 % 10 = 2
+12 / 10 = 1
+
+1 % 10 = 1
+1 / 10 = 0
+
+123 / 10^2 = 1
+123 % 10^2 = 23
+
+23 / 10^1 = 2
+23 % 10^1 = 3
+
+3 / 10^0 = 3
+3 % 10^0 = 0 => kết thúc
+
+Công thức để tính số lượng chữ số của 1 số là bao nhiêu?
+log10(10^2) = 2
+log10(99) = 
+
+số chữ số của 1 số = (int)log(số đó) + 1
+Lưu ý: log chỉ áp dụng khi số >= 1, còn nếu < 1 là không hợp lệ
+
+------------------------
+
+Bước 2: Với mỗi cụm số đã tách ra trên mỗi dòng ở Bước 1 thì phải đọc được thành chữ tương ứng với cụm số đó
+vd:
+Giả sử nhập vào số = 12,345,678
+=> Anh muốn nó phải xuất ra màn hình mỗi dòng là 1 số như sau:
+12 => muoi hai
+345 => ba tram bon muoi lam
+678 => sau tram bay muoi tam
+
+vd: Giả sử nhập vào số = 123,456,789,987
+=> Anh muốn nó phải xuất ra màn hình mỗi dòng là 1 số như sau:
+123 => mot tram hai muoi ba
+456 => bon tram nam muoi sau
+789 => bay tram tam muoi chin
+987 => chin tram tam muoi bay
+
+Viết 3 hàm: Đọc 1 chữ số, đọc 2 chữ số, đọc 3 chữ số
+Đối với số có 1 chữ số: Miền giá trị là từ 0 đến 9
+Đối với số có 2 chữ số: Miền giá trị là từ 10 đến 99
+Đối với số có 3 chữ số: Miền giá trị là từ 100 đến 999
+
+0: khong
+1: mot
+2: hai
+3: ba
+4: bon
+5: nam
+6: sau
+7: bay
+8: tam
+9: chin
+
+34: ba muoi bon
+67: sau muoi bay
+12: muoi hai # mot muoi hai
+35: ba muoi lam # ba muoi nam
+58: nam muoi tam
+Lưu ý: Số 5 nếu ở hàng đơn vị thì sẽ đọc là "lăm" còn nếu ở hàng chục thì cứ đọc "năm" như bình thường
+
+123: mot tram hai muoi ba
+105: mot tram le nam # mot tram le lam
+115: mot tram muoi lam
+
+=================================
+
+Làm các yêu cầu nâng cao thêm:
+
+Yêu cầu nâng cao số 1: đối với các Bạn viết vòng lặp trở lên: Hãy thiết kế chương trình để nó nhận vào 1 biến số nguyên lớn 8 byte (long long int) vẫn đọc được bình thường ngon lành. Tức là tối đa giá trị có thể đọc sẽ là:
+9|,223,372,036|,854,775,807 => chin (ty) hai tram hai muoi ba trieu ba tram bay muoi hai nghin khong tram ba muoi sau ty tam tram nam muoi bon trieu bay tram bay muoi lam nghin tam tram le bay
+
+123,456|,789,987,654 => mot tram hai muoi ba nghin bon tram nam muoi sau (ty) bay tram tam muoi chin trieu chin tram tam muoi bay nghin sau tram nam muoi bon
+
+9,999|,999,999,999: chin <nghin> chin tram chin muoi chin <ty> chin tram chin muoi chin <trieu> chin tram chin muoi chin <nghin> chin tram chin muoi chin
+99,999|,999,999,999: chin muoi chin <nghin> chin tram chin muoi chin <ty> chin tram chin muoi chin <trieu> chin tram chin muoi chin <nghin> chin tram chin muoi chin
+999,999|,999,999,999: chin tram chin muoi chin <nghin> chin tram chin muoi chin <ty> chin tram chin muoi chin <trieu> chin tram chin muoi chin <nghin> chin tram chin muoi chin
+9,999,999|,999,999,999: chin <trieu> chin tram chin muoi chin <nghin> chin tram chin muoi chin <ty> chin tram chin muoi chin <trieu> chin tram chin muoi chin <nghin> chin tram chin muoi chin
+99,999,999|,999,999,999: chin muoi chin <trieu> chin tram chin muoi chin <nghin> chin tram chin muoi chin <ty> chin tram chin muoi chin <trieu> chin tram chin muoi chin <nghin> chin tram chin muoi chin
+999,999,999|,999,999,999: chin tram chin muoi chin <trieu> chin tram chin muoi chin <nghin> chin tram chin muoi chin <ty> chin tram chin muoi chin <trieu> chin tram chin muoi chin <nghin> chin tram chin muoi chin
+9|,999,999,999|,999,999,999: chin <ty> chin tram chin muoi chin <trieu> chin tram chin muoi chin <nghin> chin tram chin muoi chin <ty> chin tram chin muoi chin <trieu> chin tram chin muoi chin <nghin> chin tram chin muoi chin
+
+nghin: 1, 4, 7, 10
+trieu: 2, 5, 8, 11
+ty: 3, 6, 9, 12
+
+123: mot tram hai muoi ba
+-123: am mot tram hai muoi ba
+
+Yêu cầu nâng cao 2: đối với các Bạn biết xử lý chuỗi trở lên => thiết kế làm sao để chuỗi số có bao nhiêu chữ số (30, 50, 100, 200 chữ số ...) đều đọc được hết theo nguyên tắc Anh đã chỉ
+
+Yêu cầu nâng cao 3: Nâng cấp chương trình thành đọc tiếng Việt có dấu và phải chuẩn nhé
+vd: 123: Một trăm hai mươi ba
+vd: 1234: Một nghìn hai trăm ba mươi bốn
+
+Để làm được điều này thì các Bạn cần phải google tìm hiểu cách hiển thị tiếng Việt trên console cmd với c/c++
+
+Lưu ý: Cần phân biệt rõ giữa "mốt" và "một"
+vd: 21: Hai mươi "mốt"
+123: "Một" trăm hai mươi ba
+
+Chữ "mươi" và "mười"
+
+1234567899876
+9,000|,000,000,000 (9 * 10^12): chín nghìn tỷ # chín nghìn (9000)
+90,000|,000,000,000 (9 * 10^13): chín mươi nghìn tỷ # chín mươi nghìn (90000)
+900,000|,000,000,000 (9 * 10^14): chín trăm nghìn tỷ # chín trăm nghìn (900000)
+9,000,000|,000,000,000 (9 * 10^15): chín triệu tỷ # chín triệu (9000000)
+90,000,000|,000,000,000 (9 * 10^16): chín mươi triệu tỷ # chín mươi triệu
+900,000,000|,000,000,000 (9 * 10^17): chín trăm triệu tỷ # chín trăm triệu
+9|,000,000,000|,000,000,000 (9 * 10^18): chín tỷ tỷ # chín tỷ
+
+1,000,000|,000,000,005: một triệu tỷ không trăm lẻ năm
+
+Tóm lại: Luôn bị mất chữ tỷ ở cuối cùng
+
+1|,010,101,010|,101,010,101
+
+1|,001,002,003|,004,005,006
+
+Yêu cầu nâng cao 4: Khi xuất ra số cần đọc thành chữ thì số xuất ra phải tự ngăn cách những dấu phẩy để cho người sử dụng chương trình dễ dò bằng mắt thay vì phải ngồi duyệt tay
+vd: Nhập vào số: 123456789987654321
+Kết quả xuất ra màn hình sẽ trông như thế này:
+123,456,789,987,654,321
+một trăm hai mươi ba triệu bốn trăm năm mươi sáu nghìn bảy trăm tám mươi chín tỷ chín trăm tám mươi bảy triệu sáu trăm năm mươi bốn nghìn ba trăm hai mươi mốt
+
+Yêu cầu nâng cao 5: Nếu như ở yêu cầu trước phải nhập xong hết 1 số rồi enter thì nó mới hiện ra số đó có các dấu phẩy ngăn cách và cách đọc của số đó thì bây giờ chúng ta sẽ nâng cấp nó lên 1 phiên bản tối ưu hơn như sau:
+
+Đó là ngay khi nhấn xuống phím số thì chữ số đó hiện ra trên màn hình kèm theo cách đọc tương ứng và chữ số hiện ra đó được ngăn cách các dấu phẩy
+
+vd:
+Nhấn phím 1
+trên màn hình hiện ra:
+1
+một
+
+Nhấn phím 2
+trên màn hình hiện ra:
+12
+mười hai
+
+Nhấn phím 3
+trên màn hình hiện ra:
+123
+một trăm hai mươi ba
+
+Nhấn phím 4
+trên màn hình hiện ra:
+1,234
+một nghìn hai trăm ba mươi bốn
+
+Nhấn phím 5
+trên màn hình hiện ra:
+12,345
+mười hai nghìn ba trăm bốn mươi lăm
+
+Nhấn phím 6
+trên màn hình hiện ra:
+123,456
+một trăm hai mươi ba nghìn bốn trăm năm mươi sáu
+
+Nhấn phím 7
+trên màn hình hiện ra:
+1,234,567
+một triệu hai trăm ba mươi bốn nghìn năm trăm sáu mươi bảy
+
+...
+
+Nếu giả sử nhấn phím xóa thì nó sẽ xóa đi chữ số cuối cùng của số đang có hiện tại và cập nhật lại
+
+Nhấn phím xóa (backspace)
+trên màn hình hiện ra:
+123,456
+một trăm hai mươi ba nghìn bốn trăm năm mươi sáu
+
+Nhấn phím xóa (backspace)
+trên màn hình hiện ra:
+12,345
+mười hai nghìn ba trăm bốn mươi lăm
+
+Nhấn phím xóa (backspace)
+trên màn hình hiện ra:
+1,234
+một nghìn hai trăm ba mươi bốn
+
+Lưu ý: Mỗi lần nhấn phím số hay phím xóa thì nó sẽ xóa dữ liệu màn hình trước đó mà hiển thị lại giá trị mới, tức là lúc nào màn hình cũng chỉ có duy nhất 2 dòng được xuất ra trong đó 1 dòng là số, 1 dòng là chữ
+
+=========== Phân tích gợi ý yêu cầu nâng cao số 5
+
+'0' => mã ASCII là 48
+'1' => mã ASCII là 49
+'2' => mã ASCII là 50
+...
+'9' => mã ASCII là 57
+
+Nếu từ ký tự số bất kỳ muốn chuyển sang giá trị số nguyên tương ứng ký tự số đó thì làm sao? => lấy mã ASCII của ký tự số đó trừ cho 48 là ra số tương ứng theo ký tự số đó
+
+'1' => 1
+'2' => 12
+'3' => 123
+'4' => 1234
+
+Lấy số nguyên đã convert trước đó nhân cho 10 rồi cộng với giá trị nguyên đã được convert ở lần hiện tại để ra được 1 số thống nhất từ đầu tới giờ đã nhập
+
+backspace => 123
+backspace => 12
+backspace => 1
+
+Lấy số nguyên / 10 để bỏ đi chữ số cuối
+
+Bị tràn dữ liệu khi:
+number * 10 + X > LLONG_MAX
+<=> number * 10 > LLONG_MAX - X
+<=> number > (LLONG_MAX - X) / 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
